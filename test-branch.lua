@@ -9,6 +9,7 @@ local Teams = game:GetService('Teams');
 local Players = game:GetService('Players');
 local RunService = game:GetService('RunService')
 local TweenService = game:GetService('TweenService');
+local Lighting = game:GetService('Lighting');
 local RenderStepped = RunService.RenderStepped;
 local LocalPlayer = Players.LocalPlayer;
 local Mouse = cloneref(LocalPlayer:GetMouse());
@@ -67,6 +68,26 @@ local Library = {
 };
 
 local _UI_IS_VISIBLE = false;
+
+local MenuBlur = Lighting:FindFirstChild('LionMenuBlur') or Instance.new('BlurEffect');
+MenuBlur.Name = 'LionMenuBlur';
+MenuBlur.Size = 0;
+MenuBlur.Parent = Lighting;
+
+local function SetMenuBlur(Visible)
+	local Blur = Lighting:FindFirstChild('LionMenuBlur') or MenuBlur;
+	Blur.Name = 'LionMenuBlur';
+	Blur.Parent = Lighting;
+	Blur.Size = Visible and 20 or 0;
+
+	if not Visible then
+		for _, Effect in next, Lighting:GetChildren() do
+			if Effect:IsA('BlurEffect') then
+				Effect.Size = 0;
+			end;
+		end;
+	end;
+end;
 
 local RainbowStep = 0
 local Hue = 0
@@ -4342,6 +4363,7 @@ function Library:CreateWindow(...)
 		Fading = true;
 		Toggled = (not Toggled);
 		_UI_IS_VISIBLE = Toggled;
+		SetMenuBlur(Toggled);
 		Library:FireEvent("VisibilityChanged", _UI_IS_VISIBLE);
 		ModalElement.Modal = Toggled;
 
