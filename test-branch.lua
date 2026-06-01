@@ -3524,7 +3524,7 @@ function Library:CreatePopout(Config)
 
 	local Outer = Library:Create('Frame', {
 		AnchorPoint = Config.AnchorPoint,
-		BackgroundColor3 = Color3.new(0, 0, 0);
+		BackgroundTransparency = 1;
 		BorderSizePixel = 0;
 		Position = Config.Position,
 		Size = UDim2.fromOffset(Config.Size.X, Config.Size.Y),
@@ -3537,17 +3537,15 @@ function Library:CreatePopout(Config)
 
 	local Inner = Library:Create('Frame', {
 		BackgroundColor3 = Library.MainColor;
-		BorderColor3 = Library.AccentColor;
-		BorderMode = Enum.BorderMode.Inset;
-		Position = UDim2.new(0, 1, 0, 1);
-		Size = UDim2.new(1, -2, 1, -2);
+		BorderSizePixel = 0;
+		Position = UDim2.new(0, 0, 0, 0);
+		Size = UDim2.new(1, 0, 1, 0);
 		ZIndex = 1;
 		Parent = Outer;
 	});
 
 	Library:AddToRegistry(Inner, {
 		BackgroundColor3 = 'MainColor';
-		BorderColor3 = 'AccentColor';
 	});
 
 	local WindowLabel = Library:CreateLabel({
@@ -3756,7 +3754,7 @@ function Library:CreateWindow(...)
 
 	local Outer = Library:Create('Frame', {
 		AnchorPoint = Config.AnchorPoint,
-		BackgroundColor3 = Color3.new(0, 0, 0);
+		BackgroundTransparency = 1;
 		BorderSizePixel = 0;
 		Position = Config.Position,
 		Size = Config.Size,
@@ -3769,17 +3767,15 @@ function Library:CreateWindow(...)
 
 	local Inner = Library:Create('Frame', {
 		BackgroundColor3 = Library.MainColor;
-		BorderColor3 = Library.AccentColor;
-		BorderMode = Enum.BorderMode.Inset;
-		Position = UDim2.new(0, 1, 0, 1);
-		Size = UDim2.new(1, -2, 1, -2);
+		BorderSizePixel = 0;
+		Position = UDim2.new(0, 0, 0, 0);
+		Size = UDim2.new(1, 0, 1, 0);
 		ZIndex = 1;
 		Parent = Outer;
 	});
 
 	Library:AddToRegistry(Inner, {
 		BackgroundColor3 = 'MainColor';
-		BorderColor3 = 'AccentColor';
 	});
 
 	local WindowLabel = Library:CreateLabel({
