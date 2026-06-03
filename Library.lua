@@ -69,13 +69,24 @@ local Library = {
 
 local _UI_IS_VISIBLE = false;
 
-local MenuBlur = Lighting:FindFirstChildOfClass('BlurEffect') or Instance.new('BlurEffect');
+local MenuBlur = Lighting:FindFirstChild('LionMenuBlur') or Instance.new('BlurEffect');
+MenuBlur.Name = 'LionMenuBlur';
 MenuBlur.Size = 0;
 MenuBlur.Parent = Lighting;
 
 local function SetMenuBlur(Visible)
-	local Blur = Lighting:FindFirstChildOfClass('BlurEffect') or MenuBlur;
+	local Blur = Lighting:FindFirstChild('LionMenuBlur') or MenuBlur;
+	Blur.Name = 'LionMenuBlur';
+	Blur.Parent = Lighting;
 	Blur.Size = Visible and 20 or 0;
+
+	if not Visible then
+		for _, Effect in next, Lighting:GetChildren() do
+			if Effect:IsA('BlurEffect') then
+				Effect.Size = 0;
+			end;
+		end;
+	end;
 end;
 
 local RainbowStep = 0
@@ -1394,7 +1405,10 @@ do
 			ContainerLabel.Visible = true;
 			ContainerLabel.TextColor3 = State and Library.AccentColor or Library.FontColor;
 
-			Library.RegistryMap[ContainerLabel].Properties.TextColor3 = State and 'AccentColor' or 'FontColor';
+			local RegistryObject = Library.RegistryMap[ContainerLabel];
+			if RegistryObject and RegistryObject.Properties then
+				RegistryObject.Properties.TextColor3 = State and 'AccentColor' or 'FontColor';
+			end
 		end;
 
 		function KeyPicker:Update()
