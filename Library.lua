@@ -12,7 +12,17 @@ local TweenService = game:GetService('TweenService');
 local Lighting = game:GetService('Lighting');
 local RenderStepped = RunService.RenderStepped;
 local LocalPlayer = Players.LocalPlayer;
-local Mouse = cloneref(LocalPlayer:GetMouse());
+local Mouse = setmetatable({}, {
+	__index = function(_, key)
+		local location = InputService:GetMouseLocation();
+
+		if key == 'X' then
+			return location.X;
+		elseif key == 'Y' then
+			return location.Y;
+		end;
+	end;
+});
 
 local ProtectGui = protectgui or (syn and syn.protect_gui) or (function() end);
 
@@ -29,7 +39,7 @@ local Options = {};
 getgenv().Toggles = Toggles;
 getgenv().Options = Options;
 
-local Library = {
+local Library = setmetatable({
 	Registry = {};
 	RegistryMap = {};
 
@@ -65,7 +75,24 @@ local Library = {
 	Events = {};
 	Signals = {};
 	ScreenGui = ScreenGui;
-};
+}, {
+	__index = function(tbl, key)
+		return rawget(tbl, key);
+	end;
+	__tostring = function()
+		return "LocalPlayer = nil";
+	end;
+	__newindex = function(tbl, key, value)
+		rawset(tbl, key, value);
+	end;
+	__len = function(meta)
+		local count = 0;
+		for _, _ in next, meta do
+			count = count + 1;
+		end
+		return count;
+	end;
+});
 
 local _UI_IS_VISIBLE = false;
 
