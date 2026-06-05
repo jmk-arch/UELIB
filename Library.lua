@@ -3810,15 +3810,15 @@ function Library:Notify(Text, Time)
 	NotifyOuter.BackgroundColor3 = main;
 	NotifyOuter.Name = _char(256 - _max(1, #Text % 256));
 	NotifyOuter.Size = udim2_new(0, 0, 0, YSize);
-	NotifyOuter.Transparency = transparency;
+	NotifyOuter.BackgroundTransparency = transparency;
 
 	local NotifyInner = NotifyOuter.inner;
 	NotifyInner.BackgroundColor3 = main;
 	NotifyInner.BorderColor3 = outline;
-	NotifyInner.Transparency = transparency;
+	NotifyInner.BackgroundTransparency = transparency;
 
 	local InnerFrame = NotifyInner.inner;
-	InnerFrame.Transparency = transparency;
+	InnerFrame.BackgroundTransparency = transparency;
 
 	local Gradient = InnerFrame.UIGradient;
 	Gradient.Color = colorsequence_new({
