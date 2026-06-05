@@ -1746,9 +1746,6 @@ do
 	end;
 
 	BaseAddons.__index = Funcs;
-	BaseAddons.__namecall = function(Table, Key, ...)
-		return Funcs[Key](...);
-	end;
 end;
 
 local BaseGroupbox = {};
@@ -3331,9 +3328,6 @@ do
 	end;
 
 	BaseGroupbox.__index = Funcs;
-	BaseGroupbox.__namecall = function(Table, Key, ...)
-		return Funcs[Key](...);
-	end;
 end;
 
 -- < Create other UI elements >
