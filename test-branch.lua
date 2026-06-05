@@ -59,7 +59,7 @@ local Library = setmetatable({
 	DependencyBoxes = {};
 
 	NotificationStyle = {
-		Transparency = 0;
+		Transparency = 0.3;
 		BarSide = "Bottom"; -- { "Left", "Right", "Bottom", "Top" };
 	};
 
