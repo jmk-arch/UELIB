@@ -3340,9 +3340,9 @@ end;
 do
 	Library.NotificationAreaHolder = Library:Create('Frame', {
 		BackgroundTransparency = 1;
-		AnchorPoint = Vector2.new(0, 1);
-		Position = UDim2.new(0, 0, 1, -12);
-		Size = UDim2.new(0, 2560, 0, 200);
+		AnchorPoint = Vector2.new(0.5, 1);
+		Position = UDim2.new(0.5, 0, 1, -120);
+		Size = UDim2.new(0, 520, 0, 220);
 		ZIndex = 100;
 		Parent = ScreenGui;
 	});
@@ -3358,6 +3358,7 @@ do
 	Library:Create('UIListLayout', {
 		Padding = UDim.new(0, 4);
 		FillDirection = Enum.FillDirection.Vertical;
+		HorizontalAlignment = Enum.HorizontalAlignment.Center;
 		VerticalAlignment = Enum.VerticalAlignment.Bottom;
 		SortOrder = Enum.SortOrder.LayoutOrder;
 		Parent = Library.NotificationArea;
