@@ -826,6 +826,7 @@ do
 		-- There was some issue which caused RelativeOffset to be way off
 		-- Thus the color picker would never show
 
+		local _visible = false;
 		local PickerFrameOuter = Library:Create('Frame', {
 			Name = 'Color';
 			BackgroundColor3 = Color3.new(1, 1, 1);
@@ -837,8 +838,14 @@ do
 			Parent = ScreenGui,
 		});
 
-		DisplayFrame:GetPropertyChangedSignal('AbsolutePosition'):Connect(function()
+		local function RecalculatePickerPosition()
 			PickerFrameOuter.Position = UDim2.fromOffset(DisplayFrame.AbsolutePosition.X, DisplayFrame.AbsolutePosition.Y + 18);
+		end;
+
+		DisplayFrame:GetPropertyChangedSignal('AbsolutePosition'):Connect(function()
+			if not _visible then
+				RecalculatePickerPosition();
+			end;
 		end)
 
 		local PickerFrameInner = Library:Create('Frame', {
@@ -1171,7 +1178,6 @@ do
 			Func(ColorPicker.Value)
 		end;
 
-		local _visible = false;
 		function ColorPicker:Show()
 			_visible = true;
 			for Frame, Val in next, Library.OpenedFrames do
@@ -1181,6 +1187,7 @@ do
 				end;
 			end;
 
+			RecalculatePickerPosition();
 			PickerFrameOuter.Visible = true;
 			Library.OpenedFrames[PickerFrameOuter] = true;
 		end;
@@ -2879,6 +2886,15 @@ do
 			Parent = DropdownInner;
 		});
 
+		local DropdownButton = Library:Create('TextButton', {
+			BackgroundTransparency = 1;
+			BorderSizePixel = 0;
+			Size = UDim2.new(1, 0, 1, 0);
+			Text = '';
+			ZIndex = 9;
+			Parent = DropdownOuter;
+		});
+
 		Library:OnHighlight(DropdownOuter, DropdownOuter,
 			{ BorderColor3 = 'AccentColor' },
 			{ BorderColor3 = 'Black' }
@@ -3028,6 +3044,15 @@ do
 					Parent = Button;
 				});
 
+				local ClickButton = Library:Create('TextButton', {
+					BackgroundTransparency = 1;
+					BorderSizePixel = 0;
+					Size = UDim2.new(1, 0, 1, 0);
+					Text = '';
+					ZIndex = 26;
+					Parent = Button;
+				});
+
 				Library:OnHighlight(Button, Button,
 					{ BorderColor3 = 'AccentColor', ZIndex = 24 },
 					{ BorderColor3 = 'OutlineColor', ZIndex = 23 }
@@ -3052,7 +3077,7 @@ do
 					Library.RegistryMap[ButtonLabel].Properties.TextColor3 = Selected and 'AccentColor' or 'FontColor';
 				end;
 
-				ButtonLabel.InputBegan:Connect(function(Input)
+				ClickButton.InputBegan:Connect(function(Input)
 					if Input.UserInputType == Enum.UserInputType.MouseButton1 then
 						local Try = not Selected;
 
@@ -3169,7 +3194,7 @@ do
 			table.clear(Dropdown);
 		end;
 
-		DropdownOuter.InputBegan:Connect(function(Input)
+		DropdownButton.InputBegan:Connect(function(Input)
 			if Input.UserInputType == Enum.UserInputType.MouseButton1 and not Library:MouseIsOverOpenedFrame() then
 				if ListOuter.Visible then
 					Dropdown:CloseDropdown();
