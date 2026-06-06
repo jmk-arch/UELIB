@@ -3195,7 +3195,8 @@ do
 		end;
 
 		DropdownButton.InputBegan:Connect(function(Input)
-			if Input.UserInputType == Enum.UserInputType.MouseButton1 and not Library:MouseIsOverOpenedFrame() then
+			if Input.UserInputType == Enum.UserInputType.MouseButton1
+				and (ListOuter.Visible or not Library:MouseIsOverOpenedFrame()) then
 				if ListOuter.Visible then
 					Dropdown:CloseDropdown();
 				else
