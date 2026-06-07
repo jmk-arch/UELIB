@@ -3,6 +3,7 @@ if (Library and Library.ScreenGui) then
 end;
 
 local InputService = game:GetService('UserInputService');
+local GuiService = game:GetService('GuiService');
 local TextService = game:GetService('TextService');
 local CoreGui = gethui and gethui() or cloneref(game:GetService('CoreGui'));
 local Teams = game:GetService('Teams');
@@ -14,7 +15,8 @@ local RenderStepped = RunService.RenderStepped;
 local LocalPlayer = Players.LocalPlayer;
 local Mouse = setmetatable({}, {
 	__index = function(_, key)
-		local location = InputService:GetMouseLocation();
+		local inset = GuiService:GetGuiInset();
+		local location = InputService:GetMouseLocation() - inset;
 
 		if key == 'X' then
 			return location.X;
